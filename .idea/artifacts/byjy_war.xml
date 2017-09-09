@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="byjy:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/byjy_war</output-path>
+    <root id="archive" name="byjy_war.war">
+      <element id="artifact" artifact-name="byjy:war exploded" />
+    </root>
+  </artifact>
+</component>

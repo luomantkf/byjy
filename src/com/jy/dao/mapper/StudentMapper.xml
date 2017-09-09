@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace命名空间，作用就是对sql进行分类化管理，理解sql隔离
+注意：使用mapper代理方法开发，namespace有特殊重要的作用，namespace等于mapper接口地址
+-->
+<mapper namespace="com.jy.dao.mapper.StudentMapper">
+	<insert id="insert" parameterType="com.jy.model.Student">
+		insert into userBase(userName,password,userType,detail) value(#{stuID},#{password},#{userType},#{detail});
+	</insert>
+	<insert id="insertStudent" parameterType="com.jy.model.Student">
+		<selectKey keyProperty="detail" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
+		insert into student(stuName,stuID,sex,idCard,education,workWhere,phone,academy,profession,intention,positionName) values(#{stuName},#{stuID},#{sex},#{idCard},#{education},#{workWhere},#{phone},#{academy},#{profession},#{intention},#{positionName});
+	</insert>
+	<!--统一的分页查找的方法-->
+	<select id="pageList" parameterType="com.jy.model.Student" resultType="com.jy.model.Student">
+		select user_id as userId,stu_uid as stuUid,stuID,stuName,academy,profession,intention,userType,detail,DATE_FORMAT(createTime,'%Y-%m-%d %T') AS createTime,phone,workWhere
+		from userBase,student
+		where userBase.detail=student.stu_uid
+		  <if test="condition!=null">
+			  ${condition}
+		  </if>
+
+		 order by createTime DESC limit #{start},#{pageNum};
+	</select>
+	<select id="pageRows" parameterType="com.jy.model.UserBase" resultType="java.lang.Integer">
+		select count(0) from userBase,student where userBase.detail=student.stu_uid
+		<if test="condition!=null">
+			${condition}
+		</if>
+	</select>
+	<select id="selectStuName" parameterType="java.lang.String" resultType="java.lang.String">
+		select stuName from student where stuID=#{value}
+	</select>
+	<select id="selectById" parameterType="java.lang.Integer" resultType="com.jy.model.Student">
+		select stu_uid as stuUid,stuName,stuID,sex,idCard,education,workWhere,phone,academy,profession,intention,positionName from student where stu_uid=#{stuUid}
+	</select>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from userBase where user_id=#{userId}
+	</delete>
+	<delete id="deleteStudent" parameterType="java.lang.Integer">
+		delete from student where stu_uid=#{value}
+	</delete>
+	<select id="listAll" parameterType="com.jy.model.Student" resultType="com.jy.model.Student">
+		select user_id as userId,stu_uid as stuUid,stuID,stuName,sex,userType,detail,DATE_FORMAT(createTime,'%Y-%m-%d %T') AS createTime,phone,workWhere,positionName
+		from userBase,student
+		where userBase.detail=student.stu_uid
+		<if test="condition!=null">
+			${condition}
+		</if>
+		order by createTime DESC;
+	</select>
+</mapper>
+
+

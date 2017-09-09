@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace命名空间，作用就是对sql进行分类化管理，理解sql隔离
+注意：使用mapper代理方法开发，namespace有特殊重要的作用，namespace等于mapper接口地址
+-->
+<mapper namespace="com.jy.dao.mapper.UserBaseMapper">
+	<select id="select" parameterType="com.jy.model.UserBase" resultType="com.jy.model.UserBase">
+		select user_id as userId,userName,userType,detail from userBase where userName=#{userName} and password=#{password} and userType=#{userType}
+	</select>
+	<select id="selectDetail" parameterType="com.jy.model.UserBase" resultType="java.lang.Integer">
+		select detail from userBase where user_id=#{userId}
+	</select>
+	<update id="updatePwd" parameterType="com.jy.model.UserBase">
+		update userBase set password=#{password} where user_id=#{userId}
+	</update>
+</mapper>
+
+

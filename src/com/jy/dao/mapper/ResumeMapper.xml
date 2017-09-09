@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace命名空间，作用就是对sql进行分类化管理，理解sql隔离
+注意：使用mapper代理方法开发，namespace有特殊重要的作用，namespace等于mapper接口地址
+-->
+<mapper namespace="com.jy.dao.mapper.ResumeMapper">
+	<insert id="insertResume" parameterType="com.jy.model.Resume">
+		<selectKey keyProperty="resumeId" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
+		insert into resume(age,address,university,tongue,skill,introduce,picture,resumeFile,schoolExperience,workExperience) values(#{age},#{address},#{university},#{tongue},#{skill},#{introduce},#{picture},#{resumeFile},#{schoolExperience},#{workExperience});
+	</insert>
+	<update id="updateStud" parameterType="com.jy.model.Resume">
+		update student set sex=#{sex},phone=#{phone},intention=#{intention},resume_id=#{resumeId} where stu_uid=#{stuUid}
+	</update>
+	<select id="showResume" parameterType="java.lang.Integer" resultType="com.jy.model.Resume">
+		select stu_uid as stuUid,stuID,resume.resume_id as resumeId,stuName,academy,sex,education,workWhere,phone,age,address,university,profession,intention,tongue,skill,introduce,picture,resumeFile,schoolExperience,workExperience from userBase,student,resume where userBase.detail=student.stu_uid and student.resume_id=resume.resume_id and userType=1 and user_id=#{value}
+	</select>
+	<select id="showResume2" parameterType="java.lang.Integer" resultType="com.jy.model.Resume">
+		select stu_uid as stuUid,stuName,stuID,sex,idCard,education,workWhere,phone,academy,profession,intention from userBase,student where userBase.detail=student.stu_uid and userType=1 and user_id=#{value}
+	</select>
+	<select id="selectResumeId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	  select resume_id from student where  stu_uid=#{stuUid}
+	</select>
+	<update id="update" parameterType="com.jy.model.Resume">
+		update resume set age=#{age},address=#{address},university=#{university},tongue=#{tongue},skill=#{skill},introduce=#{introduce},resumeFile=#{resumeFile},schoolExperience=#{schoolExperience},workExperience=#{workExperience}  where resume_id=#{resumeId}
+	</update>
+</mapper>
+
+

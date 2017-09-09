@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace命名空间，作用就是对sql进行分类化管理，理解sql隔离
+注意：使用mapper代理方法开发，namespace有特殊重要的作用，namespace等于mapper接口地址
+-->
+<mapper namespace="com.jy.dao.mapper.ApplyResumeMapper">
+	<insert id="insertApplyResume" parameterType="com.jy.model.ApplyResume">
+		insert into applyResume(job_id,user_id) values(#{jobId},#{userId});
+	</insert>
+	<select id="selectStatus" parameterType="com.jy.model.ApplyResume" resultType="java.lang.Short">
+		select status from applyResume where user_id=#{userId} and job_id=#{jobId}
+	</select>
+	<select id="pageList" parameterType="com.jy.model.ApplyResume" resultType="com.jy.model.ApplyResumeVo">
+		select applyResume_id as applyResumeId,userBase.user_id as userId,job_id as jobId,status,DATE_FORMAT(applyTime,'%Y-%m-%d %T') as applyTime,stuName,phone from applyResume,userBase,student where userBase.detail=student.stu_uid and applyResume.user_id=userBase.user_id and job_id=#{jobId} order by applyResumeId DESC limit #{start},#{pageNum};
+	</select>
+	<select id="pageRows" parameterType="com.jy.model.ApplyResume" resultType="java.lang.Integer">
+		select count(0) from applyResume,userBase,student where userBase.detail=student.stu_uid and applyResume.user_id=userBase.user_id and job_id=#{jobId}
+	</select>
+	<update id="changStatus">
+		update applyResume set status=#{status} where applyResume_id=#{applyResumeId};
+	</update>
+	<select id="selectApplyResume" parameterType="com.jy.model.ApplyResume" resultType="com.jy.model.ApplyResume">
+		select applyResume_id as applyResumeId,DATE_FORMAT(applyTime,'%Y-%m-%d %T') as applyTime from applyResume where user_id=#{userId} and job_id=#{jobId}
+	</select>
+
+</mapper>
+
+

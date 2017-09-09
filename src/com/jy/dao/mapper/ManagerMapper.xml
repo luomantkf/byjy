@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace命名空间，作用就是对sql进行分类化管理，理解sql隔离
+注意：使用mapper代理方法开发，namespace有特殊重要的作用，namespace等于mapper接口地址
+-->
+<mapper namespace="com.jy.dao.mapper.ManagerMapper">
+
+
+	<select id="getUserName" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select userName from userBase where user_id=#{id};
+	</select>
+	<insert id="insert" parameterType="com.jy.model.Manager">
+		insert into userBase(userName,password,userType,detail) value(#{userName},#{password},#{userType},#{detail});
+	</insert>
+	<insert id="insertManager" parameterType="com.jy.model.Manager">
+		<selectKey keyProperty="detail" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
+		insert into manager(phone) values(#{phone});
+	</insert>
+	<!--统一的分页查找的方法-->
+	<select id="pageList" parameterType="com.jy.model.Manager" resultType="com.jy.model.Manager">
+		select user_id as userId,userName,password,userType,detail,DATE_FORMAT(createTime,'%Y-%m-%d %T') AS createTime,phone
+		from userBase,manager
+		where userBase.detail=manager.manager_id and userType=3 order by createTime DESC limit #{start},#{pageNum};
+	</select>
+	<select id="pageRows" parameterType="com.jy.model.UserBase" resultType="java.lang.Integer">
+		select count(0) from userBase where userType=#{userType}
+	</select>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from userBase where user_id=#{userId}
+	</delete>
+	<delete id="deleteManager" parameterType="java.lang.Integer">
+		delete from manager where manager_id=#{value}
+	</delete>
+</mapper>
+
+

@@ -1,0 +1,259 @@
+a:link {
+	color: #0000FF;
+}
+
+a:visited {
+	color: #3366FF;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+input.text {
+	
+}
+
+a:active {
+	color: #FF0000;
+}
+
+a.hidden {
+	color: #000000;
+}
+
+a.hidden:visited {
+	color: #000000;
+}
+
+a.hidden:hover {
+	color: #0000CC;
+}
+
+a.hidden:active {
+	color: #000000;
+}
+
+a.nav:link {
+	color: #333333;
+	padding: 2px;
+}
+
+a.nav:visited {
+	color: #cccccc;
+	padding: 2px;
+}
+
+a.nav:hover {
+	color: #FFFFFF;
+	background-color: #666666;
+	padding: 2px;
+}
+
+a.menu {
+	font-family: arial, helvetica, sans-serif;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+a.menu:hover {
+	font-family: arial, helvetica, sans-serif;
+	font-weight: bold;
+	text-decoration: underline;
+	letter-spacing: 1px;
+}
+
+a.box {
+	padding: 3px;
+	background-color: #FFFFFF;
+	text-decoration: none;
+	border: medium solid #CCCCCC;
+	color: #000000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+a.box:hover {
+	color: #000000;
+	padding: 3px;
+	text-decoration: none;
+	background-color: #666666;
+	border: medium solid #3366FF;
+	color: #FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#contain {
+	width: 80%;
+	margin-left: 10%;
+	float: inherit;
+}
+
+#top {
+	padding: 0px;
+	margin-top: 0;
+	margin-left: 0;
+	margin-right: auto;
+	height: auto;
+	width: 100%;
+	float: inherit;
+}
+
+#title {
+	font-size: xx-large;
+	font-style: italic;
+	font-weight: bold;
+	float: inherit;
+	height: auto;
+	width: 749;
+	height: 120px;
+	background: url(../img/top.gif);
+	text-align: center;
+}
+
+#bottom {
+	float: inherit;
+	margin-bottom: 0px;
+	margin-top: auto;
+	margin-left: auto;
+	margin-right: auto;
+	height: auto;
+	width: 100%;
+	text-align: center;
+	font-size: 12px;
+}
+
+#navigation {
+	background: white;
+	float: inherit;
+	width: auto;
+	height: 10%;
+	position: relative;
+	margin-left: 0px;
+	margin-right: auto;
+	margin-top: auto;
+	text-align: center;
+}
+
+#login {
+	font-size: 14px;
+	float: inherit;
+	margin-top: 0;
+	margin-left: 0;
+	width: 100%;
+}
+
+#mainleft {
+	float: left;
+	width: 15%;
+	height: 100%;
+}
+
+#mainright {
+	float: left;
+	margin-top: 2%;
+	margin-left: 0;
+	width: 75%;
+}
+
+textarea {
+	width: 200px;
+}
+
+td {
+	text-align: left;
+}
+
+.password {
+	height: 20px;
+	width: 150px;
+}
+
+.text {
+	height: 15px;
+	width: 150px;
+}
+
+#box {
+	background-image: url(../img/regbg.gif);
+	background-repeat: repeat;
+	width: 70%;
+	height: auto;
+	position: relative;
+	margin-left: 15%;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-bottom: auto;
+	float: inherit;
+}
+
+#swf {
+	float: left;
+	width: 376px;
+	height: 592px;
+	position: relative;
+	left: auto;
+	top: 0;
+	right: auto;
+	bottom: auto;
+}
+
+#reg {
+	float: inherit;
+	position: relative;
+	top: 35%;
+	right: auto;
+	left: 5%;
+	bottom: auto;
+	height: 60px;
+	width: 300px;
+	visibility: visible;
+}
+
+#stuReg {
+	float: inherit;
+	position: relative;
+	top: 5%;
+	right: auto;
+	left: 30%;
+	bottom: auto;
+	height: auto;
+	width: 50%;
+	visibility: visible;
+}
+
+#myself {
+	height: 100px;
+	width: 100%;
+}
+
+#main {
+	float: inherit;
+	width: 100%;
+}
+
+#submit {
+	background: url(../img/submit.gif);
+}
+
+#inbox {
+	float: inherit;
+	text-align: center;
+	margin-top: 8%;
+}
+
+.fontStyle {
+	font-size: 16px;
+	font-family: "¿¬Ìå_GB2312";
+}
+
+#contnet {
+	width: 95%;
+	float: right;
+	height: 600px;
+	margin-right: 2%;
+}
+#instructTitle{
+	margin-left: 20%;
+	width: 60%;
+	text-align: center;
+}

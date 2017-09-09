@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace命名空间，作用就是对sql进行分类化管理，理解sql隔离
+注意：使用mapper代理方法开发，namespace有特殊重要的作用，namespace等于mapper接口地址
+-->
+<mapper namespace="com.jy.dao.mapper.JobMapper">
+	<insert id="insertJob" parameterType="com.jy.model.Job">
+		insert into Job(enterprise_id,jobName,jobAddress,jobNeed,jobAmount,jobSalary,jobEndTime,remark) values(#{enterpriseId},#{jobName},#{jobAddress},#{jobNeed},#{jobAmount},#{jobSalary},#{jobEndTime},#{remark});
+	</insert>
+	<select id="pageList" parameterType="com.jy.model.Job" resultType="com.jy.model.JobVo">
+		select enterprise.enterprise_id as enterpriseId,enterpriseName,phone,userName,job_id as jobId,jobName,jobNeed,jobAddress,jobAmount,jobSalary,jobEndTime,remark,job.status
+		from enterprise,job,userBase
+		where job.enterprise_id=enterprise.enterprise_id and userBase.detail=enterprise.enterprise_id and userType=2
+		<if test="condition!=null">
+			${condition}
+		</if>
+
+		<if test="userId != 0">
+			and user_id=#{userId}
+		</if>
+		<if test="status != 0">
+			 and job.status=#{status}
+		 </if>
+		 order by jobId DESC limit #{start},#{pageNum};
+	</select>
+	<select id="pageRows" parameterType="com.jy.model.Job" resultType="java.lang.Integer">
+		select count(0) from enterprise,job,userBase where job.enterprise_id=enterprise.enterprise_id and userBase.detail=enterprise.enterprise_id
+		<if test="userId != 0">
+			and user_id=#{userId}
+		</if>
+		<if test="status != 0">
+				and job.status=#{status}
+		</if>
+		<if test="condition!=null">
+			${condition}
+		</if>
+	</select>
+	<select id="selectById" parameterType="java.lang.Integer" resultType="com.jy.model.JobVo">
+		select enterpriseName,enterprise.enterprise_id as enterpriseId,userName,job_id as jobId,jobName,jobNeed,jobAddress,jobAmount,jobSalary,jobEndTime,job.status,remark
+		from enterprise,job,userBase
+		where job.enterprise_id=enterprise.enterprise_id and userBase.detail=enterprise.enterprise_id and userType=2 and job_id=#{value} ;
+	</select>
+	<update id="changStatus" parameterType="java.lang.Integer">
+		update job set status=1 where job_id=#{value};
+	</update>
+	<update id="update" parameterType="com.jy.model.Job">
+		update job set enterprise_id=#{enterpriseId},jobName=#{jobName},jobAddress=#{jobAddress},jobNeed=#{jobNeed},jobAmount=#{jobAmount},jobSalary=#{jobSalary},jobEndTime=#{jobEndTime},remark=#{remark},status=0 where job_id=#{jobId}
+	</update>
+	<select id="selectByEnterpriseName" parameterType="java.lang.String" resultType="com.jy.model.JobVo">
+		select enterprise.enterprise_id as enterpriseId,enterpriseName,phone,userName,job_id as jobId,jobName,jobNeed,jobAddress,jobAmount,jobSalary,jobEndTime,remark,job.status
+		from enterprise,job,userBase
+		where job.enterprise_id=enterprise.enterprise_id and userBase.detail=enterprise.enterprise_id and userType=2 and job.status=1 and enterpriseName like '%${enterpriseName}%' order by jobId DESC limit #{start},#{pageNum}
+	</select>
+	<select id="selectByJobName" parameterType="java.lang.String" resultType="com.jy.model.JobVo">
+		select enterprise.enterprise_id as enterpriseId,enterpriseName,phone,userName,job_id as jobId,jobName,jobNeed,jobAddress,jobAmount,jobSalary,jobEndTime,remark,job.status
+		from enterprise,job,userBase
+		where job.enterprise_id=enterprise.enterprise_id and userBase.detail=enterprise.enterprise_id and userType=2 and job.status=1 and jobName like '%${jobName}%' order by jobId DESC limit #{start},#{pageNum}
+	</select>
+	<select id="selectNewJob" parameterType="com.jy.model.Job" resultType="com.jy.model.JobVo">
+		select enterprise.enterprise_id as enterpriseId,enterpriseName,phone,userName,job_id as jobId,jobName,jobNeed,jobAddress,jobAmount,jobSalary,jobEndTime,remark,job.status
+		from enterprise,job,userBase
+		where job.enterprise_id=enterprise.enterprise_id and userBase.detail=enterprise.enterprise_id and userType=2 and job.status=1  order by jobId DESC limit #{start},#{pageNum}
+	</select>
+	<select id="selectJobEndTime" parameterType="com.jy.model.Job" resultType="com.jy.model.JobVo">
+		select enterprise.enterprise_id as enterpriseId,enterpriseName,phone,userName,job_id as jobId,jobName,jobNeed,jobAddress,jobAmount,jobSalary,jobEndTime,remark,job.status
+		from enterprise,job,userBase
+		where job.enterprise_id=enterprise.enterprise_id and userBase.detail=enterprise.enterprise_id and userType=2 and job.status=1  order by jobEndTime ASC limit #{start},#{pageNum}
+	</select>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from job where job_id=#{value}
+	</delete>
+</mapper>
+
+

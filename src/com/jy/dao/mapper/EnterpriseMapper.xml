@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace命名空间，作用就是对sql进行分类化管理，理解sql隔离
+注意：使用mapper代理方法开发，namespace有特殊重要的作用，namespace等于mapper接口地址
+-->
+<mapper namespace="com.jy.dao.mapper.EnterpriseMapper">
+	<insert id="insert" parameterType="com.jy.model.Enterprise">
+		<selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
+		insert into userBase(userName,password,userType,detail) value(#{userName},#{password},#{userType},#{detail});
+	</insert>
+	<insert id="insertEnterprise" parameterType="com.jy.model.Enterprise">
+		<selectKey keyProperty="detail" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
+		insert into Enterprise(enterpriseName,address,phone,contactMan,email,website,evidence) values(#{enterpriseName},#{address},#{phone},#{contactMan},#{email},#{website},#{evidence});
+	</insert>
+	<update id="updateBaseDetail" parameterType="com.jy.model.Enterprise">
+		update userBase set detail=#{detail} where user_id=#{userId}
+	</update>
+	<select id="getStatus" parameterType="com.jy.model.UserBase" resultType="java.lang.Short">
+		select status from enterprise where enterprise_id in(select detail from userBase where user_id=#{userId})
+	</select>
+
+	<!--统一的分页查找的方法-->
+	<select id="pageList" parameterType="com.jy.model.Enterprise" resultType="com.jy.model.Enterprise">
+		select userName,enterprise_id as enterpriseId,enterpriseName,address,contactMan,status,phone
+		from userBase,Enterprise
+		where userBase.detail=Enterprise.enterprise_id and userType=2  order by enterpriseId DESC limit #{start},#{pageNum};
+	</select>
+	<select id="selectById" parameterType="java.lang.Integer" resultType="com.jy.model.Enterprise">
+		select userName,enterprise_id as enterpriseId,enterpriseName,address,phone,contactMan,email,website,evidence,status
+		from userBase,Enterprise
+		where userBase.detail=Enterprise.enterprise_id and userType=2 and enterprise_id=#{value};
+	</select>
+
+	<select id="pageRows" parameterType="com.jy.model.UserBase" resultType="java.lang.Integer">
+		select count(0) from enterprise,userBase where userBase.detail=Enterprise.enterprise_id and userType=2
+	</select>
+	<update id="changStatus" parameterType="java.lang.Integer">
+		update enterprise set status=1 where enterprise_id=#{value};
+	</update>
+</mapper>
+
+
